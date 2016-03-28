@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 import datetime as dt
 
-# Create your models here.
+#created by david.lopes
 
 class Segmento(models.Model):
     nome = models.CharField(max_length=200)
