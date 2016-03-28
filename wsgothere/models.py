@@ -49,8 +49,6 @@ class Fornecedor(models.Model):
     preco_medio = models.FloatField()
 
     cidade = models.ForeignKey(Cidade, related_name='fornecedor_cidade')
-    estado = models.ForeignKey(Estado, related_name='fornecedor_estado')
-    pais = models.ForeignKey(Pais, related_name='fornecedor_pais')
 
     telefone_1 = models.CharField(max_length=20)
     telefone_2 = models.CharField(max_length=20)
