@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from rest_framework import routers
-from wsgothere.views import SegmentoViewSet, FornecedorViewSet, ItemViewSet, PaisViewSet
+from wsgothere.views import SegmentoViewSet, FornecedorViewSet, ItemViewSet, PaisViewSet, EstadoViewSet, CidadeViewSet
 
 router = routers.DefaultRouter()
 router.register(r'Segmento', SegmentoViewSet, base_name='SegmentoViewSet')
