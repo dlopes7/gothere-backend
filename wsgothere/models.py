@@ -18,16 +18,25 @@ class Pais(models.Model):
     nome = models.CharField(max_length=50)
     sigla = models.CharField(max_length=3)
 
+    def __str__(self):
+        return '{nome} ({sigla})'.format(nome=self.nome, sigla=self.sigla)
+
 class Estado(models.Model):
     nome = models.CharField(max_length=50)
     sigla = models.CharField(max_length=2)
     pais = models.ForeignKey(Pais, related_name='estado_pais')
+
+    def __str__(self):
+        return '{nome} ({sigla}) - {pais}'.format(nome=self.nome, sigla=self.sigla, pais=self.pais.nome)
 
 
 class Cidade(models.Model):
     nome = models.CharField(max_length=50)
     pais = models.ForeignKey(Pais, related_name='pais')
     estado = models.ForeignKey(Estado, related_name='cidade_estado')
+
+    def __str__(self):
+        return '{nome} - {estado} - {pais}'.format(nome=self.nome, estado=self.estado.nome, pais=self.pais.nome)
 
 class Fornecedor(models.Model):
     class Meta:
@@ -69,6 +78,9 @@ class Item(models.Model):
     data_criacao = models.DateTimeField(auto_now=True)
     data_edicao = models.DateTimeField(auto_now_add=True)
     data_vigencia = models.DateTimeField()
+
+    def __str__(self):
+        return '{id} - {nome}'.format(id=self.id, nome=self.produto)
 
 
 
