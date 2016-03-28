@@ -2,7 +2,9 @@ from django.db import models
 from django.utils import timezone
 import datetime as dt
 
-#created by david.lopes
+
+# created by david.lopes
+
 
 class Segmento(models.Model):
     nome = models.CharField(max_length=200)
@@ -12,14 +14,17 @@ class Segmento(models.Model):
     def __str__(self):
         return '{id} - {nome}'.format(id=self.id, nome=self.nome)
 
+
 class Pais(models.Model):
     class Meta:
         verbose_name_plural = "Países"
+
     nome = models.CharField(max_length=50)
     sigla = models.CharField(max_length=3)
 
     def __str__(self):
         return '{nome} ({sigla})'.format(nome=self.nome, sigla=self.sigla)
+
 
 class Estado(models.Model):
     nome = models.CharField(max_length=50)
@@ -38,6 +43,7 @@ class Cidade(models.Model):
     def __str__(self):
         return '{nome} - {estado} - {pais}'.format(nome=self.nome, estado=self.estado.nome, pais=self.pais.nome)
 
+
 class Fornecedor(models.Model):
     class Meta:
         verbose_name_plural = "Fornecedores"
@@ -55,7 +61,6 @@ class Fornecedor(models.Model):
 
     cnpj = models.CharField(max_length=30)
 
-
     data_criacao = models.DateTimeField(auto_now=True)
     data_edicao = models.DateTimeField(auto_now_add=True)
 
@@ -65,10 +70,10 @@ class Fornecedor(models.Model):
                                                  preco=self.preco_medio)
 
 
-
 class Item(models.Model):
     class Meta:
         verbose_name_plural = "Itens"
+
     produto = models.CharField(max_length=100)
     descricao = models.CharField(max_length=1000)
     valor_unitario = models.FloatField()
@@ -79,6 +84,3 @@ class Item(models.Model):
 
     def __str__(self):
         return '{id} - {nome}'.format(id=self.id, nome=self.produto)
-
-
-
