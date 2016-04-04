@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from wsgothere.models import Item, Fornecedor, Segmento, Pais, Estado, Cidade
+from wsgothere.models import Item, Fornecedor, Segmento, Pais, Estado, Cidade, Classe
 
 
 class SegmentoSerializer(serializers.ModelSerializer):
@@ -34,3 +34,7 @@ class EstadoSerializer(serializers.ModelSerializer):
 class CidadeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cidade
+
+class ClasseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classe

@@ -5,8 +5,8 @@ from django.shortcuts import render
 from rest_framework import viewsets
 
 from wsgothere.serializers import SegmentoSerializer, ItemSerializer, FornecedorSerializer, PaisSerializer, \
-    EstadoSerializer, CidadeSerializer
-from wsgothere.models import Fornecedor, Segmento, Item, Pais, Estado, Cidade
+    EstadoSerializer, CidadeSerializer, ClasseSerializer
+from wsgothere.models import Fornecedor, Segmento, Item, Pais, Estado, Cidade, Classe
 
 
 class SegmentoViewSet(viewsets.ModelViewSet):
@@ -49,3 +49,9 @@ class CidadeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Cidade.objects.all()
+
+class ClasseViewSet(viewsets.ModelViewSet):
+    serializer_class = ClasseSerializer
+
+    def get_queryset(self):
+        return Classe.objects.all()

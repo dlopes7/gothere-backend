@@ -6,10 +6,23 @@ import datetime as dt
 # created by david.lopes
 
 
+
+
+
+class Classe(models.Model):
+    nome = models.CharField(max_length=200)
+    data_criacao = models.DateTimeField(auto_now=True)
+    data_edicao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{id} - {nome}'.format(id=self.id, nome=self.nome)
+
+
 class Segmento(models.Model):
     nome = models.CharField(max_length=200)
     data_criacao = models.DateTimeField(auto_now=True)
     data_edicao = models.DateTimeField(auto_now_add=True)
+    classe = models.ForeignKey(Classe, related_name='segmento_classe')
 
     def __str__(self):
         return '{id} - {nome}'.format(id=self.id, nome=self.nome)
@@ -84,3 +97,5 @@ class Item(models.Model):
 
     def __str__(self):
         return '{id} - {nome}'.format(id=self.id, nome=self.produto)
+
+

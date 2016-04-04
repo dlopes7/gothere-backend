@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from rest_framework import routers
-from wsgothere.views import SegmentoViewSet, FornecedorViewSet, ItemViewSet, PaisViewSet, EstadoViewSet, CidadeViewSet
+from wsgothere.views import SegmentoViewSet, FornecedorViewSet, ItemViewSet, PaisViewSet, EstadoViewSet, CidadeViewSet, ClasseViewSet
 
 router = routers.DefaultRouter()
 router.register(r'Segmento', SegmentoViewSet, base_name='SegmentoViewSet')
@@ -9,6 +9,7 @@ router.register(r'Item', ItemViewSet, base_name='ItemViewSet')
 router.register(r'Pais', PaisViewSet, base_name='PaisViewSet')
 router.register(r'Estado', EstadoViewSet, base_name='EstadoViewSet')
 router.register(r'Cidade', CidadeViewSet, base_name='CidadeViewSet')
+router.register(r'Classe', ClasseViewSet, base_name='ClasseViewSet')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
