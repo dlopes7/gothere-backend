@@ -102,6 +102,7 @@ class Fornecedor(models.Model):
     class Meta:
         managed = False
         db_table = 'Fornecedores'
+        verbose_name_plural = 'Fornecedores'
 
 
 class Item(models.Model):
@@ -117,6 +118,7 @@ class Item(models.Model):
     class Meta:
         managed = False
         db_table = 'Itens'
+        verbose_name_plural = 'Itens'
 
 
 class UsuarioFacebook(models.Model):
