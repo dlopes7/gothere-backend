@@ -7,9 +7,13 @@ class Pais(models.Model):
     sigla = models.CharField(db_column='PaisSigla', max_length=50, blank=True, null=True)
     exibicao = models.TextField(db_column='PaisExibicao', blank=True, null=True)
 
+    def __str__(self):
+        return '{id} - {sigla} - {nome}'.format(id=self._id, sigla=self.sigla, nome=self.nome)
+
     class Meta:
         managed = False
         db_table = 'Paises'
+        verbose_name_plural = 'Paises'
 
 
 class Estado(models.Model):
@@ -18,6 +22,12 @@ class Estado(models.Model):
     sigla = models.CharField(db_column='EstadoSigla', max_length=50, blank=True, null=True)
     pais = models.ForeignKey(Pais, db_column='PaisId', blank=True, null=True)
     exibicao = models.TextField(db_column='EstadoExibicao', blank=True, null=True)
+
+    def __str__(self):
+        return '{id} - {sigla} - {nome} ({pais})'.format(id=self._id,
+                                                         sigla=self.sigla,
+                                                         nome=self.nome,
+                                                         pais=self.pais.nome)
 
     class Meta:
         managed = False
@@ -31,6 +41,12 @@ class Cidade(models.Model):
     pais = models.ForeignKey(Pais, db_column='PaisId', blank=True, null=True)
     exibicao = models.TextField(db_column='CidadeExibicao', blank=True, null=True)
 
+    def __str__(self):
+        return '{id} - {nome} - {estado} ({pais})'.format(id=self._id,
+                                                          nome=self.nome,
+                                                          estado=self.estado.sigla,
+                                                          pais=self.estado.pais.sigla)
+
     class Meta:
         managed = False
         db_table = 'Cidades'
@@ -40,6 +56,10 @@ class Classe(models.Model):
     _id = models.AutoField(db_column='ClasseId', primary_key=True)
     nome = models.CharField(db_column='ClasseNome', max_length=50, blank=True, null=True)
 
+    def __str__(self):
+        return '{id} - {nome}'.format(id=self._id,
+                                      nome=self.nome)
+
     class Meta:
         managed = False
         db_table = 'Classes'
@@ -48,7 +68,12 @@ class Classe(models.Model):
 class Segmento(models.Model):
     _id = models.AutoField(db_column='SegmentoId', primary_key=True)
     nome = models.CharField(db_column='SegmentoNome', max_length=50, blank=True, null=True)
-    classe = models.TextField(db_column='SegmentoClasse', blank=True, null=True)
+    classe = models.ForeignKey(Classe, db_column='SegmentoClasse', blank=True, null=True)
+
+    def __str__(self):
+        return '{id} - {nome} ({classe})'.format(id=self._id,
+                                                 nome=self.nome,
+                                                 classe=self.classe.nome)
 
     class Meta:
         managed = False
@@ -68,6 +93,11 @@ class Fornecedor(models.Model):
     telefone2 = models.DecimalField(db_column='FornecedorTelefone2', max_digits=18, decimal_places=0, blank=True,
                                     null=True)
     cnpj = models.CharField(db_column='FornecedorCNPJ', max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return '{id} - {nome} ({cnpj})'.format(id=self._id,
+                                               nome=self.nome,
+                                               cnpj=self.cnpj)
 
     class Meta:
         managed = False
