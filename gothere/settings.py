@@ -15,6 +15,7 @@ import os
 
 from . import config
 
+os.environ['TDSVER'] = '8.0'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
