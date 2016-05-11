@@ -1,101 +1,137 @@
 from django.db import models
-from django.utils import timezone
-import datetime as dt
-
-
-# created by david.lopes
-
-
-
-
-
-class Classe(models.Model):
-    nome = models.CharField(max_length=200)
-    data_criacao = models.DateTimeField(auto_now=True)
-    data_edicao = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{id} - {nome}'.format(id=self.id, nome=self.nome)
-
-
-class Segmento(models.Model):
-    nome = models.CharField(max_length=200)
-    data_criacao = models.DateTimeField(auto_now=True)
-    data_edicao = models.DateTimeField(auto_now_add=True)
-    classe = models.ManyToManyField(Classe, related_name='segmento_classe', null=True)
-
-    def __str__(self):
-        return '{id} - {nome}'.format(id=self.id, nome=self.nome)
 
 
 class Pais(models.Model):
+    _id = models.AutoField(db_column='PaisId', primary_key=True)
+    nome = models.CharField(db_column='PaisNome', max_length=50, blank=True, null=True)
+    sigla = models.CharField(db_column='PaisSigla', max_length=50, blank=True, null=True)
+    exibicao = models.TextField(db_column='PaisExibicao', blank=True, null=True)
+
     class Meta:
-        verbose_name_plural = "Países"
-
-    nome = models.CharField(max_length=50)
-    sigla = models.CharField(max_length=3)
-
-    def __str__(self):
-        return '{nome} ({sigla})'.format(nome=self.nome, sigla=self.sigla)
+        managed = False
+        db_table = 'Paises'
 
 
 class Estado(models.Model):
-    nome = models.CharField(max_length=50)
-    sigla = models.CharField(max_length=2)
-    pais = models.ForeignKey(Pais, related_name='estado_pais')
+    _id = models.AutoField(db_column='EstadoId', primary_key=True)
+    nome = models.CharField(db_column='EstadoNome', max_length=50, blank=True, null=True)
+    sigla = models.CharField(db_column='EstadoSigla', max_length=50, blank=True, null=True)
+    pais = models.ForeignKey(Pais, db_column='PaisId', blank=True, null=True)
+    exibicao = models.TextField(db_column='EstadoExibicao', blank=True, null=True)
 
-    def __str__(self):
-        return '{nome} ({sigla}) - {pais}'.format(nome=self.nome, sigla=self.sigla, pais=self.pais.nome)
+    class Meta:
+        managed = False
+        db_table = 'Estados'
 
 
 class Cidade(models.Model):
-    nome = models.CharField(max_length=50)
-    pais = models.ForeignKey(Pais, related_name='pais')
-    estado = models.ForeignKey(Estado, related_name='cidade_estado')
+    _id = models.AutoField(db_column='CidadeId', primary_key=True)
+    nome = models.CharField(db_column='CidadeNome', max_length=50, blank=True, null=True)
+    estado = models.ForeignKey(Estado, db_column='EstadoId', blank=True, null=True)
+    pais = models.ForeignKey(Pais, db_column='PaisId', blank=True, null=True)
+    exibicao = models.TextField(db_column='CidadeExibicao', blank=True, null=True)
 
-    def __str__(self):
-        return '{nome} - {estado} - {pais}'.format(nome=self.nome, estado=self.estado.nome, pais=self.pais.nome)
+    class Meta:
+        managed = False
+        db_table = 'Cidades'
+
+
+class Classe(models.Model):
+    _id = models.AutoField(db_column='ClasseId', primary_key=True)
+    nome = models.CharField(db_column='ClasseNome', max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Classes'
+
+
+class Segmento(models.Model):
+    _id = models.AutoField(db_column='SegmentoId', primary_key=True)
+    nome = models.CharField(db_column='SegmentoNome', max_length=50, blank=True, null=True)
+    classe = models.TextField(db_column='SegmentoClasse', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Segmentos'
 
 
 class Fornecedor(models.Model):
+    _id = models.AutoField(db_column='FornecedorId', primary_key=True)
+    segmento = models.ForeignKey(Segmento, db_column='FornecedorSegmento', max_length=50, blank=True, null=True)
+    nome = models.CharField(db_column='FornecedorNome', max_length=50, blank=True, null=True)
+    descricao = models.TextField(db_column='FornecedorDescricao', blank=True, null=True)
+    precomedio = models.DecimalField(db_column='FornecedorPrecoMedio', max_digits=19, decimal_places=4, blank=True,
+                                     null=True)
+    cidade = models.ForeignKey(Cidade, db_column='FornecedorCidade', max_length=50, blank=True, null=True)
+    telefone1 = models.DecimalField(db_column='FornecedorTelefone1', max_digits=18, decimal_places=0, blank=True,
+                                    null=True)
+    telefone2 = models.DecimalField(db_column='FornecedorTelefone2', max_digits=18, decimal_places=0, blank=True,
+                                    null=True)
+    cnpj = models.CharField(db_column='FornecedorCNPJ', max_length=50, blank=True, null=True)
+
     class Meta:
-        verbose_name_plural = "Fornecedores"
-
-    segmento = models.ManyToManyField(Segmento, related_name='fornecedor_segmentos')
-
-    nome = models.CharField(max_length=200)
-    descricao = models.CharField(max_length=1000)
-    preco_medio = models.FloatField()
-
-    cidade = models.ForeignKey(Cidade, related_name='fornecedor_cidade')
-
-    telefone_1 = models.CharField(max_length=20)
-    telefone_2 = models.CharField(max_length=20)
-
-    cnpj = models.CharField(max_length=30)
-
-    data_criacao = models.DateTimeField(auto_now=True)
-    data_edicao = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{id} - {nome}: R${preco}'.format(id=self.id,
-                                                 nome=self.nome,
-                                                 preco=self.preco_medio)
+        managed = False
+        db_table = 'Fornecedores'
 
 
 class Item(models.Model):
+    _id = models.AutoField(db_column='ItemId', primary_key=True)
+    produto = models.CharField(db_column='ItemProduto', max_length=50, blank=True, null=True)
+    descricao = models.TextField(db_column='ItemDescricao', blank=True, null=True)
+    valor_unitario = models.DecimalField(db_column='ItemValorUnitario', max_digits=19, decimal_places=4, blank=True,
+                                         null=True)
+    fornecedor = models.ForeignKey(Fornecedor, db_column='ItemFornecedor', max_length=50, blank=True, null=True)
+    data_vigencia = models.CharField(db_column='ItemDataVigencia', max_length=10, blank=True, null=True)
+    hora_vigencia = models.CharField(db_column='ItemHoraVigencia', max_length=10, blank=True, null=True)
+
     class Meta:
-        verbose_name_plural = "Itens"
-
-    produto = models.CharField(max_length=100)
-    descricao = models.CharField(max_length=1000)
-    valor_unitario = models.FloatField()
-    fornecedor = models.ForeignKey(Fornecedor, related_name='fornecedor')
-    data_criacao = models.DateTimeField(auto_now=True)
-    data_edicao = models.DateTimeField(auto_now_add=True)
-    data_vigencia = models.DateTimeField()
-
-    def __str__(self):
-        return '{id} - {nome}'.format(id=self.id, nome=self.produto)
+        managed = False
+        db_table = 'Itens'
 
 
+class UsuarioFacebook(models.Model):
+    _id = models.AutoField(db_column='FaceId', primary_key=True)
+    facebook_id = models.TextField(db_column='FacebookId', blank=True, null=True)
+    nome = models.CharField(db_column='FacebookNome', max_length=50, blank=True, null=True)
+    email = models.CharField(db_column='FacebookEmail', max_length=50, blank=True, null=True)
+    datra_first_login = models.CharField(db_column='FacebookFirstLogin', max_length=50, blank=True, null=True)
+    data_last_login = models.CharField(db_column='FacebookLastLogin', max_length=50, blank=True, null=True)
+    newsletter = models.NullBooleanField(db_column='FacebookNewsLetter')
+    is_adm = models.NullBooleanField(db_column='FacebookADM')
+
+    class Meta:
+        managed = False
+        db_table = 'UsuariosFacebook'
+
+
+class Usuario(models.Model):
+    _id = models.IntegerField(db_column='UsuarioId', primary_key=True)
+    email = models.CharField(db_column='UsuarioEmail', max_length=50, blank=True, null=True)
+    senha = models.CharField(db_column='UsuarioSenha', max_length=50, blank=True, null=True)
+    ativo = models.NullBooleanField(db_column='UsuarioAtivo')
+    is_conta_validada = models.NullBooleanField(db_column='UsuarioContaValidada')
+    is_fornecedor = models.NullBooleanField(db_column='UsuarioFornecedor')
+    is_adm = models.NullBooleanField(db_column='UsuarioADM')
+    nascimento = models.CharField(db_column='UsuarioNascimento', max_length=50, blank=True, null=True)
+    pais = models.CharField(db_column='UsuarioPais', max_length=50, blank=True, null=True)
+    cidade = models.CharField(db_column='UsuarioCidade', max_length=50, blank=True, null=True)
+    linguagem = models.CharField(db_column='UsuarioLinguagem', max_length=50, blank=True, null=True)
+    data_criacao = models.CharField(db_column='UsuarioCriacao', max_length=50, blank=True, null=True)
+    data_last_login = models.CharField(db_column='UsuarioLastLogin', max_length=50, blank=True, null=True)
+    newsletter = models.NullBooleanField(db_column='UsuarioNewsLetter')
+    is_facebook = models.NullBooleanField(db_column='UsuarioFacebook')
+    facebook = models.ForeignKey(UsuarioFacebook, db_column='IdFacebook', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Usuarios'
+
+
+class Token(models.Model):
+    _id = models.AutoField(db_column='TokenId', primary_key=True)
+    usuario = models.ForeignKey(Usuario, db_column='UsuarioId', blank=True, null=True)
+    nome = models.CharField(db_column='TokenNome', max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Tokens'

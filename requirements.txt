@@ -1,4 +1,5 @@
 Django
-psycopg2
+pyodbc
+django-pyodbc-azure
 djangorestframework
 django-rest-swagger

@@ -5,4 +5,5 @@ WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 ADD . /code/
-
+RUN apt-get -qq update
+RUN apt-get -qq install freetds freetds-devel
