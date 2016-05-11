@@ -115,6 +115,12 @@ class Item(models.Model):
     data_vigencia = models.CharField(db_column='ItemDataVigencia', max_length=10, blank=True, null=True)
     hora_vigencia = models.CharField(db_column='ItemHoraVigencia', max_length=10, blank=True, null=True)
 
+    def __str__(self):
+        return '{id} - {produto} ({valor_unitario}) - {fornecedor}'.format(id=self._id,
+                                                                           produto=self.produto,
+                                                                           valor_unitario=self.valor_unitario,
+                                                                           fornecedor=self.fornecedor.nome)
+
     class Meta:
         managed = False
         db_table = 'Itens'
