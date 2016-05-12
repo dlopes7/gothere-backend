@@ -1,12 +1,8 @@
-from django.http import HttpResponse
-from django.utils.datastructures import MultiValueDictKeyError
-from django.shortcuts import render
-
 from rest_framework import viewsets
 
+from wsgothere.models import Fornecedor, Segmento, Item, Pais, Estado, Cidade, Classe, Bairro
 from wsgothere.serializers import SegmentoSerializer, ItemSerializer, FornecedorSerializer, PaisSerializer, \
-    EstadoSerializer, CidadeSerializer, ClasseSerializer
-from wsgothere.models import Fornecedor, Segmento, Item, Pais, Estado, Cidade, Classe
+    EstadoSerializer, CidadeSerializer, ClasseSerializer, BairroSerializer
 
 
 class SegmentoViewSet(viewsets.ModelViewSet):
@@ -49,6 +45,14 @@ class CidadeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Cidade.objects.all()
+
+
+class BairroViewSet(viewsets.ModelViewSet):
+    serializer_class = BairroSerializer
+
+    def get_queryset(self):
+        return Bairro.objects.all()
+
 
 class ClasseViewSet(viewsets.ModelViewSet):
     serializer_class = ClasseSerializer
