@@ -38,7 +38,6 @@ class Cidade(models.Model):
     _id = models.AutoField(db_column='CidadeId', primary_key=True)
     nome = models.CharField(db_column='CidadeNome', max_length=50, blank=True, null=True)
     estado = models.ForeignKey(Estado, db_column='EstadoId', blank=True, null=True)
-    pais = models.ForeignKey(Pais, db_column='PaisId', blank=True, null=True)
     exibicao = models.TextField(db_column='CidadeExibicao', blank=True, null=True)
 
     def __str__(self):
@@ -50,6 +49,30 @@ class Cidade(models.Model):
     class Meta:
         managed = False
         db_table = 'Cidades'
+
+
+class Bairro(models.Model):
+    _id = models.AutoField(db_column='BairroId', primary_key=True)  # Field name made lowercase.
+    nome = models.CharField(db_column='BairroNome', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    endereco = models.TextField(db_column='BairroEndereco', blank=True, null=True)  # Field name made lowercase.
+    cep = models.CharField(db_column='BairroCEP', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    numero = models.CharField(db_column='BairroNumero', max_length=50, blank=True,
+                              null=True)  # Field name made lowercase.
+    complemento = models.CharField(db_column='BairroComplemento', max_length=50, blank=True,
+                                   null=True)  # Field name made lowercase.
+    status = models.CharField(db_column='BairroStatus', max_length=50, blank=True,
+                              null=True)  # Field name made lowercase.
+    cidade = models.ForeignKey(Cidade, db_column='CidadeId', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Bairro'
+
+    def __str__(self):
+        return '{id} - {nome} - {estado} ({pais})'.format(id=self._id,
+                                                          nome=self.nome,
+                                                          estado=self.estado.sigla,
+                                                          pais=self.estado.pais.sigla)
 
 
 class Classe(models.Model):
