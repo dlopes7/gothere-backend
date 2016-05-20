@@ -12,7 +12,7 @@ class Pais(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Paises'
+        db_table = 'Pais'
         verbose_name_plural = 'Paises'
 
 
@@ -31,7 +31,7 @@ class Estado(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Estados'
+        db_table = 'Estado'
 
 
 class Cidade(models.Model):
@@ -48,7 +48,7 @@ class Cidade(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Cidades'
+        db_table = 'Cidade'
 
 
 class Bairro(models.Model):
@@ -85,7 +85,7 @@ class Classe(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Classes'
+        db_table = 'Classe'
 
 
 class Segmento(models.Model):
@@ -100,7 +100,7 @@ class Segmento(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Segmentos'
+        db_table = 'Segmento'
 
 
 class Fornecedor(models.Model):
@@ -124,7 +124,7 @@ class Fornecedor(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Fornecedores'
+        db_table = 'Fornecedor'
         verbose_name_plural = 'Fornecedores'
 
 
@@ -146,7 +146,7 @@ class Item(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Itens'
+        db_table = 'Item'
         verbose_name_plural = 'Itens'
 
 
@@ -162,7 +162,7 @@ class UsuarioFacebook(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'UsuariosFacebook'
+        db_table = 'UsuarioFacebook'
 
 
 class Usuario(models.Model):
@@ -185,7 +185,7 @@ class Usuario(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Usuarios'
+        db_table = 'Usuario'
 
 
 class Token(models.Model):
@@ -195,4 +195,4 @@ class Token(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Tokens'
+        db_table = 'Token'
