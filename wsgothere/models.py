@@ -103,6 +103,27 @@ class Segmento(models.Model):
         db_table = 'Segmento'
 
 
+class Location(models.Model):
+    _id = models.AutoField(db_column='LocationId', primary_key=True)
+    nome = models.CharField(db_column='LocationNome', max_length=50, blank=True, null=True)
+    descricao = models.TextField(db_column='LocationDescricao', blank=True, null=True)
+    icon = models.TextField(db_column='LocationIcon', blank=True, null=True)
+    latitude = models.CharField(db_column='LocationLatitude', max_length=50, blank=True, null=True)
+    longitude = models.CharField(db_column='LocationLongitude', max_length=50, blank=True, null=True)
+    segmento = models.ForeignKey(Segmento, db_column='SegmentoId', max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return '{id} - {nome} ({latitude}, {longitude})'.format(id=self._id,
+                                                                nome=self.nome,
+                                                                latitude=self.latitude,
+                                                                longitude=self.longitude)
+
+    class Meta:
+        managed = False
+        db_table = 'Location'
+        verbose_name_plural = 'Locations'
+
+
 class Fornecedor(models.Model):
     _id = models.AutoField(db_column='FornecedorId', primary_key=True)
     segmento = models.ForeignKey(Segmento, db_column='FornecedorSegmento', max_length=50, blank=True, null=True)
@@ -111,9 +132,9 @@ class Fornecedor(models.Model):
     precomedio = models.DecimalField(db_column='FornecedorPrecoMedio', max_digits=19, decimal_places=4, blank=True,
                                      null=True)
     cidade = models.ForeignKey(Cidade, db_column='FornecedorCidade', max_length=50, blank=True, null=True)
-    telefone1 = models.DecimalField(db_column='FornecedorTelefone1', max_digits=18, decimal_places=0, blank=True,
+    telefone1 = models.DecimalField(db_column='FornecedorTelefone01', max_digits=18, decimal_places=0, blank=True,
                                     null=True)
-    telefone2 = models.DecimalField(db_column='FornecedorTelefone2', max_digits=18, decimal_places=0, blank=True,
+    telefone2 = models.DecimalField(db_column='FornecedorTelefone02', max_digits=18, decimal_places=0, blank=True,
                                     null=True)
     cnpj = models.CharField(db_column='FornecedorCNPJ', max_length=50, blank=True, null=True)
 
