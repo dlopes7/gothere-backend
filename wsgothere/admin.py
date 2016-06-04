@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from wsgothere.models import Segmento, Item, Fornecedor, Pais, Cidade, Estado, Classe, Bairro
+from wsgothere.models import Segmento, Item, Fornecedor, Pais, Cidade, Estado, Classe, Bairro, Location
 
 admin.site.register(Segmento)
 admin.site.register(Item)
@@ -12,3 +12,4 @@ admin.site.register(Cidade)
 admin.site.register(Estado)
 admin.site.register(Classe)
 admin.site.register(Bairro)
+admin.site.register(Location)

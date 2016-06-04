@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
-from wsgothere.models import Item, Fornecedor, Segmento, Pais, Estado, Cidade, Classe, Bairro
+from wsgothere.models import Item, Fornecedor, Segmento, Pais, Estado, Cidade, Classe, Bairro, Location
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
 
 
 class SegmentoSerializer(serializers.ModelSerializer):
-    segmentos = serializers.HyperlinkedRelatedField(many=True,
-                                                    read_only=True,
-                                                    view_name='SegmentoViewSet-detail')
 
     class Meta:
         model = Segmento

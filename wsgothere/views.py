@@ -1,8 +1,15 @@
 from rest_framework import viewsets
 
-from wsgothere.models import Fornecedor, Segmento, Item, Pais, Estado, Cidade, Classe, Bairro
+from wsgothere.models import Fornecedor, Segmento, Item, Pais, Estado, Cidade, Classe, Bairro, Location
 from wsgothere.serializers import SegmentoSerializer, ItemSerializer, FornecedorSerializer, PaisSerializer, \
-    EstadoSerializer, CidadeSerializer, ClasseSerializer, BairroSerializer
+    EstadoSerializer, CidadeSerializer, ClasseSerializer, BairroSerializer, LocationSerializer
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    serializer_class = LocationSerializer
+
+    def get_queryset(self):
+        return Location.objects.all()
 
 
 class SegmentoViewSet(viewsets.ModelViewSet):
